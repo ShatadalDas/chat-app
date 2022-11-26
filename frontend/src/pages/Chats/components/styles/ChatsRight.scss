@@ -57,16 +57,19 @@
     }
   }
   &__main {
-    height: 80%;
+    height: 80vh;
     width: 100%;
     color: #fff;
     display: flex;
     flex-direction: column-reverse;
     gap: 2vh;
     padding: 2vh 2%;
-    overflow-y: scroll;
+    overflow: scroll !important;
     scroll-behavior: smooth;
     @extend .thin-scrollbar;
+    & > * {
+      flex-shrink: 0 !important; //very very important property
+    }
   }
   &__footer {
     background: var(--cht-rgt-inp);

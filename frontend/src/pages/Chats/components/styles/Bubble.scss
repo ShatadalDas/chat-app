@@ -9,37 +9,36 @@
 }
 
 .bubble {
-  box-sizing: content-box;
   font-size: 0.8em;
-  width: max-content;
-  min-width: 4em;
   max-width: 50%;
-  padding: 0.5em 0.6em;
-  min-height: 2.1rem;
-  // padding-block-end: 1.3em;
+  width: max-content;
+  min-width: 15%;
+  padding: 0.7em 0.8em;
+  padding-block-end: 2em;
   border-radius: 0.5em;
   position: relative;
-  display: block;
 
-  * {
+  & > * {
     overflow-wrap: break-word;
     white-space: pre-wrap;
-    outline: 1px solid red;
-    display: block;
+    font-weight: 600;
   }
 
   &::after {
     content: attr(data-time);
     position: absolute;
-    right: 1.5em;
-    bottom: 0.5em;
-    font-size: 0.55em;
-    opacity: 0.8;
+    color: hsla(0, 0%, 100%, 0.8);
+    bottom: 0.8em;
+    right: 1em;
+    font-size: 0.6em;
+    font-weight: 600;
   }
+
   &.sent {
     background: var(--sent-bbl-clr);
-    margin-inline: auto 0;
+    margin-inline-start: auto;
   }
+
   &.received {
     background: var(--received-bbl-clr);
   }

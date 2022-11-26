@@ -41,8 +41,13 @@ const io = new Server(httpServer, {
 const users = [];
 io.on("connection", (socket) => {
     socket.on("connected", (myId) => {
-        users.push({ socketid: socket.id, id: myId });
-        socket.emit("getid", { id: socket.id });
+        const me = users.find((user) => user.id === myId);
+        if (me) {
+            me.socketid = socket.id;
+        }
+        else {
+            users.push({ socketid: socket.id, id: myId });
+        }
     });
     socket.on("send", (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
@@ -74,7 +79,7 @@ io.on("connection", (socket) => {
                     yield receiverContact.populate("contacts");
                 }
                 const to = users.find((user) => user.id === data.receiver);
-                console.log("To: ", to);
+                console.log("Users: ", users);
                 if (to) {
                     socket.broadcast.to(to.socketid).emit("new-msg", {
                         sender,

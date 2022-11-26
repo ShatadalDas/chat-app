@@ -41,7 +41,8 @@ function ChatsRight() {
       let h = date.getHours();
       const m = date.getMinutes();
       const greet = h >= 12 ? "PM" : "AM";
-      if (h !== 12) h = (h % 12) + 1;
+      if (h === 12) h++;
+      h %= 12;
       const time = `${h}:${m < 10 ? "0" + m : m} ${greet}`;
       const msgObj = {
         sender: myid,
@@ -51,7 +52,7 @@ function ChatsRight() {
       };
       setMessages((state) => [msgObj, ...state]);
       setMsg("");
-      socket?.emit("send", {
+      socket.emit("send", {
         sender: myid,
         receiver: receiver.id,
         msg,
@@ -84,13 +85,20 @@ function ChatsRight() {
       });
   }
 
+  /*
+   *%%%%%%%%%%%%%%%%%%%% useEffects %%%%%%%%%%%%%%%%%%%%%%%*/
   useEffect(() => {
     fetchMessages();
   }, [receiver.id]);
 
-  socket.on("new-msg", (data) => {
-    setMessages((state) => [data, ...state]);
-  });
+  useEffect(() => {
+    if (socket.connected) {
+      socket.emit("connected", myid);
+      socket.on("new-msg", (data) => {
+        setMessages((state) => [data, ...state]);
+      });
+    }
+  }, [socket]);
 
   /*
    *%%%%%%%%%%%%%%%%%%%% Return %%%%%%%%%%%%%%%%%%%%%%%*/
@@ -102,14 +110,9 @@ function ChatsRight() {
       </header>
 
       <main className="right__main">
-        {messages.map((msg) => {
+        {messages.map((msg, i) => {
           return (
-            <Bubble
-              key={Math.floor(Math.random() * 1e5 + 1)}
-              sender={msg.sender}
-              time={msg.time}
-              txt={msg.msg}
-            />
+            <Bubble key={i} sender={msg.sender} time={msg.time} txt={msg.msg} />
           );
         })}
       </main>

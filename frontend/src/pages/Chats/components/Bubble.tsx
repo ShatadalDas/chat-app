@@ -14,7 +14,7 @@ function Bubble({ sender, time, txt }: Props) {
       className={"bubble " + (sender === myid ? "sent" : "received")}
       data-time={time}
     >
-      <p>{txt}</p>
+      <pre>{txt}</pre>
     </div>
   );
 }
