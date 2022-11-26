@@ -1,0 +1,46 @@
+:root {
+  --sent-bbl-clr: #122147;
+  --received-bbl-clr: #0e302f;
+
+  @media (prefers-color-scheme: light) {
+    --sent-bbl-clr: #1e22c1c9;
+    --received-bbl-clr: #8685ef;
+  }
+}
+
+.bubble {
+  box-sizing: content-box;
+  font-size: 0.8em;
+  width: max-content;
+  min-width: 4em;
+  max-width: 50%;
+  padding: 0.5em 0.6em;
+  min-height: 2.1rem;
+  // padding-block-end: 1.3em;
+  border-radius: 0.5em;
+  position: relative;
+  display: block;
+
+  * {
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    outline: 1px solid red;
+    display: block;
+  }
+
+  &::after {
+    content: attr(data-time);
+    position: absolute;
+    right: 1.5em;
+    bottom: 0.5em;
+    font-size: 0.55em;
+    opacity: 0.8;
+  }
+  &.sent {
+    background: var(--sent-bbl-clr);
+    margin-inline: auto 0;
+  }
+  &.received {
+    background: var(--received-bbl-clr);
+  }
+}

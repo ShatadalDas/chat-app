@@ -1,0 +1,22 @@
+@use "../../../../utils/module" as *;
+
+:root {
+  --dfl-bc: #100127;
+  --dfl-clr: #ffffff;
+
+  @media (prefers-color-scheme: light) {
+    --dfl-bc: #ffffff;
+    --dfl-clr: #7d7bff;
+  }
+}
+
+.default {
+  width: 60%;
+  height: 100%;
+  color: var(--dfl-clr);
+  @extend .gridcenter;
+  font-family: "Roboto";
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  font-size: 1.3em;
+}

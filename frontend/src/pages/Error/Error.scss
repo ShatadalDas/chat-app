@@ -1,0 +1,62 @@
+@use "../../utils/module" as *;
+
+:root {
+  --error-icon: #243386;
+  --error-code: rgba(255, 0, 0, 0.6);
+}
+
+.error {
+  position: relative;
+  height: 100%;
+  font-size: clamp(1.5rem, 3vw + 1vh + 0.1rem, 3rem);
+  &-bg-icon {
+    color: rgba(0, 0, 0, 0.05);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    font-size: 50vh;
+    z-index: -1;
+  }
+  &__header {
+    @extend .flexcenter;
+    height: 30%;
+    gap: 0.5em;
+    font-size: 1.5em;
+    :first-child {
+      color: var(--error-icon);
+      font-size: 1em;
+    }
+    h1 {
+      color: var(--error-code);
+      font-weight: 900;
+      font-size: 1.3em;
+      font-family: "Roboto Mono";
+    }
+  }
+  blockquote {
+    height: 70%;
+    @extend .f-ai;
+    flex-direction: column;
+    gap: 1em;
+    padding: 10vh 0;
+    h2 {
+      font-size: 0.85em;
+      font-weight: 700;
+      font-family: "Roboto";
+    }
+    p {
+      font-size: 0.7em;
+      font-family: "Lato";
+    }
+    .error__link {
+      font-size: 0.5em;
+      color: blue;
+      font-size: 700;
+      cursor: pointer;
+      &:where(:hover, :active) {
+        text-decoration: underline;
+      }
+    }
+  }
+}

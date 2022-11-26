@@ -1,0 +1,115 @@
+@use "../../../../utils/module" as *;
+
+:root {
+  --cht-rgt-header: #020014;
+  --cht-rgt-header-border: #00fff8;
+  --cht-rgt-inp: #020014;
+  --cht-rgt-inp-active: #fff2;
+  --cht-rgt-inp-clr: #ffffff;
+  --cht-rgt-btn: linear-gradient(90deg, #06a9cf 0%, #00cec8 102.41%);
+  --cht-rgt-btn-clr: #000;
+
+  @media (prefers-color-scheme: light) {
+    --cht-rgt-header: linear-gradient(
+      176.92deg,
+      #8685ef 2.93%,
+      #4f4ebe 245.54%
+    );
+    --cht-rgt-header-border: #474554;
+    --cht-rgt-inp: #f3eeff;
+    --cht-rgt-inp-active: #0051;
+    --cht-rgt-inp-clr: #474554;
+    --cht-rgt-btn: #2d3d9b;
+    --cht-rgt-btn-clr: #fff;
+  }
+}
+
+.right {
+  @extend .fd-c;
+  width: 60%;
+  height: 100%;
+  font-size: clamp(0.8rem, 1vw + 1vh + 0.1rem, 1.1rem);
+
+  @include mq() {
+    font-size: clamp(0.9rem, 1.5vw + 1.1vh + 0.1rem, 1.2rem);
+    display: none;
+  }
+  &__header {
+    background: var(--cht-rgt-header);
+    height: 10%;
+    color: #fff;
+    @extend .f-jc;
+    flex-direction: column;
+    padding: 0 4%;
+    gap: 0.2em;
+    font-family: "Roboto";
+    font-weight: 700;
+    font-size: 0.8em;
+    position: relative;
+    z-index: 1;
+    border: 1px solid var(--cht-rgt-header-border);
+    h3 {
+      opacity: 0.8;
+      font-size: 0.6em;
+      text-transform: lowercase;
+      font-weight: 600;
+      font-family: "Lato";
+    }
+  }
+  &__main {
+    height: 80%;
+    width: 100%;
+    color: #fff;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 2vh;
+    padding: 2vh 2%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    @extend .thin-scrollbar;
+  }
+  &__footer {
+    background: var(--cht-rgt-inp);
+    height: 10%;
+    @extend .gridcenter;
+    border: 1px solid var(--cht-rgt-header-border);
+    &__frm {
+      width: 97%;
+      display: flex;
+      gap: 2%;
+      font-size: 1em;
+      textarea {
+        font-size: 0.85em;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        resize: none;
+        width: 89%;
+        height: 7vh;
+        padding: 0.5em 1em;
+        border-radius: 0.2em;
+        border: none;
+        background: transparent;
+        color: var(--cht-rgt-inp-clr);
+        font-family: "Lato", sans-serif;
+        &:where(:focus, :active) {
+          outline: none;
+          background-color: var(--cht-rgt-inp-active);
+        }
+        &::placeholder {
+          font-weight: normal;
+          font-size: 0.9em;
+        }
+      }
+      button {
+        @extend .gridcenter;
+        flex: 1;
+        font-size: 130%;
+        border: none;
+        border-radius: 0.3em;
+        background: var(--cht-rgt-btn);
+        color: var(--cht-rgt-btn-clr);
+        cursor: pointer;
+      }
+    }
+  }
+}

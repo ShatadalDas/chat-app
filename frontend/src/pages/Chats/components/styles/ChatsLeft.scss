@@ -1,0 +1,200 @@
+@use "../../../../utils/module" as *;
+
+:root {
+  /*
+  * %%%%%%%%%%% Dark Theme %%%%%%%%%% *
+  */
+  --chtleft-clr: #fff;
+  --chtleft-icn-clr: #fff;
+  --chtleft-icn-hov: #ffffff22;
+  --chtleft-outline: #00cec8;
+  --chtleft-logout-btn: linear-gradient(
+    101.59deg,
+    #a70c34 31.17%,
+    #ea4e28 90.86%
+  );
+  --add-bg: #11012880;
+  --add-frm-bc: #1f004d;
+  --add-frm-clr: #ffffff;
+  --add-frm-otl: 0.1rem solid #00cec8;
+  --add-frm-shw: #0087a799;
+  --add-frm-btn: linear-gradient(
+    90deg,
+    #0087a7 0%,
+    #02b1be 48.96%,
+    #05dcd6 100%
+  );
+  --add-frm-btn-shw: #000;
+  --add-frm-inp-bc: #ffffff;
+  --add-frm-inp-clr: #140033;
+
+  /*
+  * %%%%%%%%%%% Light Theme %%%%%%%%%% *
+  */
+  @media (prefers-color-scheme: light) {
+    --chtleft-clr: #474554;
+    --chtleft-icn-clr: #2d3d9b;
+    --chtleft-outline: #474554;
+    --chtleft-icn-hov: #bbb4e654;
+    --chtleft-logout-btn: linear-gradient(
+      101.59deg,
+      #ff2e7b 31.17%,
+      #ff6c3f 90.86%
+    );
+    --add-frm-bc: #ffffff;
+    --add-frm-clr: #474554;
+    --add-frm-otl: none;
+    --add-frm-shw: #00000044;
+    --add-frm-btn: hsla(231, 55%, 39%, 1);
+    --add-frm-btn-shw: #ddd;
+    --add-frm-inp-bc: #f4f0ff;
+    --add-frm-inp-clr: #636363;
+    --add-bg: linear-gradient(116.68deg, #8785ef66 35.55%, #4040ba66 108.96%);
+  }
+}
+
+.chatsLeft {
+  height: 100vh;
+  width: 40%;
+  color: var(--chtleft-clr);
+  outline: 1px solid var(--chtleft-outline);
+  @extend .fd-c;
+  @include mq() {
+    width: 100%;
+    outline: none;
+  }
+
+  &__header {
+    @extend .f-ai;
+    justify-content: space-between;
+    padding: 0.5em 1em;
+    font-size: clamp(0.8rem, 1vw + 1vh + 0.1rem, 1.2rem);
+
+    @include mq() {
+      font-size: clamp(0.9rem, 1vw + 1vh + 0.15rem, 1.3rem);
+    }
+
+    h1 {
+      font-size: 1.5em;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      font-family: "Lato", sans-serif;
+    }
+    &__icons {
+      @extend .f-ai;
+      gap: 1em;
+      font-size: 1.2em;
+
+      &__icon {
+        @extend .gridcenter;
+        height: 1.5em;
+        aspect-ratio: 1;
+        border-radius: 50%;
+        cursor: pointer;
+        color: var(--chtleft-icn-clr);
+        &:hover {
+          background-color: var(--chtleft-icn-hov);
+        }
+      }
+
+      & :first-child {
+        font-size: 1.05em;
+      }
+
+      & :last-child {
+        font-size: 0.95em;
+      }
+    }
+  }
+
+  &__aside {
+    @extend .fd-c, .thin-scrollbar;
+    gap: 2vh;
+    height: 100%;
+    padding: 5% 9%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+  }
+}
+
+.add {
+  &__frm {
+    color: var(--add-frm-clr);
+    background: var(--add-frm-bc);
+    padding: calc(1.2em + 1vw) 1.5em;
+    width: 60%;
+    max-width: 24rem;
+    box-shadow: 0 0 3rem var(--frm-shw);
+    outline: var(--frm-otl);
+    border-radius: 0.7em;
+    @extend .fd-c;
+    font-size: clamp(0.6rem, 1.5vw + 1vh + 0.1rem, 1.2rem);
+    gap: calc(2vh + 1vw);
+    user-select: none;
+
+    &__grp {
+      display: flex;
+      gap: calc(1vh + 0.5vw) !important;
+      flex-direction: column;
+      gap: calc(1vh + 0.5vw);
+      font-size: 1em;
+      label {
+        font-size: 0.9;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        @media (width < 600px) {
+          font-weight: 700;
+        }
+      }
+      input {
+        color: var(--frm-inp-clr);
+        padding: 0.55em 1em;
+        border: none;
+        border-radius: 0.4em;
+        font-size: 0.85em;
+        font-weight: 600;
+        font-family: "Lato", sans-serif;
+        background: var(--frm-inp-bc);
+        letter-spacing: 0.2em;
+        &:where(:active, :focus) {
+          outline: none;
+        }
+        &::placeholder {
+          opacity: 0.4;
+          font-size: 0.8em;
+          letter-spacing: 0.1em;
+        }
+      }
+    }
+
+    &__btn {
+      margin-block-start: 2vh;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1em;
+      & > button {
+        width: 35%;
+        border: none;
+        font-size: 1em;
+        padding: 0.5em 0;
+        border-radius: 0.5em;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: hsl(0, 0%, 100%);
+        cursor: pointer;
+      }
+
+      &__save {
+        background: var(--add-frm-btn);
+        &:disabled {
+          filter: brightness(60%);
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+      }
+      &__cancel {
+        background: #fb203e;
+      }
+    }
+  }
+}

@@ -1,0 +1,123 @@
+@use "../../../../utils/module" as *;
+
+:root {
+  /*
+  * %%%%%%%%%%% Dark Theme %%%%%%%%%% *
+  */
+  --frm-bc: #1f004d;
+  --frm-clr: #ffffff;
+  --frm-otl: 0.1rem solid #00cec8;
+  --frm-shw: rgba(0, 135, 167, 0.6);
+  --frm-btn: linear-gradient(90deg, #0087a7 0%, #02b1be 48.96%, #05dcd6 100%);
+  --frm-btn-shw: #000;
+  --frm-inp-bc: #ffffff;
+  --frm-inp-clr: #140033;
+
+  /*
+  * %%%%%%%%%%% Light Theme %%%%%%%%%% *
+  */
+  @media (prefers-color-scheme: light) {
+    --frm-bc: #ffffff;
+    --frm-clr: #474554;
+    --frm-otl: none;
+    --frm-shw: #00000044;
+    --frm-btn: hsla(231, 55%, 39%, 1);
+    --frm-btn-shw: #ddd;
+    --frm-inp-bc: #f4f0ff;
+    --frm-inp-clr: #636363;
+  }
+}
+
+.frm {
+  background: var(--frm-bc);
+  color: var(--frm-clr);
+  padding: calc(1.2em + 1vw) 1.5em;
+  width: 60%;
+  max-width: 24rem;
+  box-shadow: 0 0 3rem var(--frm-shw);
+  outline: var(--frm-otl);
+  border-radius: 0.7em;
+  @extend .fd-c;
+  font-size: clamp(0.6rem, 1.5vw + 1vh + 0.1rem, 1.2rem);
+  gap: calc(2vh + 1vw);
+  user-select: none;
+
+  &__grp {
+    display: flex;
+    gap: calc(1vh + 0.5vw) !important;
+    flex-direction: column;
+    gap: calc(1vh + 0.5vw);
+    font-size: 1em;
+    label {
+      font-size: 0.9;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      @media (width < 600px) {
+        font-weight: 700;
+      }
+    }
+    input {
+      color: var(--frm-inp-clr);
+      padding: 0.55em 1em;
+      border: none;
+      border-radius: 0.4em;
+      font-size: 0.85em;
+      font-weight: 600;
+      font-family: "Lato", sans-serif;
+      background: var(--frm-inp-bc);
+      letter-spacing: 0.2em;
+      &:where(:active, :focus) {
+        outline: none;
+      }
+      &::placeholder {
+        opacity: 0.4;
+        font-size: 0.8em;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    &__pass {
+      background: var(--frm-inp-bc);
+      display: flex;
+      border-radius: 0.3em;
+      & input {
+        background: transparent;
+        border: none;
+        width: 95%;
+      }
+      &__icon {
+        @extend .f-ai;
+        margin-inline: 0.4em;
+        color: var(--frm-inp-clr);
+        font-size: 1.4em;
+        & > * {
+          @extend .f-ai;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &__btn {
+    border: none;
+    background: var(--frm-btn);
+    color: hsl(0, 0%, 100%);
+    font-size: 0.85em;
+    padding: 0.9em 0;
+    width: 43%;
+    margin-inline: auto;
+    margin-block: 5vh 0;
+    border-radius: 0.5em;
+    max-width: 10rem;
+    cursor: pointer;
+    box-shadow: 0 0 0.5rem var(--frm-btn-shw);
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: hsl(0, 0%, 100%);
+    &:disabled {
+      filter: brightness(60%);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  }
+}

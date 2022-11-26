@@ -1,0 +1,56 @@
+@use "../../../../utils/module" as *;
+
+:root {
+  --contact-bc: linear-gradient(270deg, #00c1bc 1.05%, #00728c 98.29%);
+  --contact-name: #ffffff;
+  --contact-sender: #ffffffe1;
+  --contact-lastMsg: #ffffffc2;
+
+  @media (prefers-color-scheme: light) {
+    --contact-bc: #f3eeff;
+    --contact-name: #474554;
+    --contact-sender: #474554c8;
+    --contact-lastMsg: #474554ba;
+  }
+}
+
+.contact {
+  width: 100%;
+  background: var(--contact-bc);
+  padding: 3% 6%;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: clamp(0.8rem, 1.5vw + 1vh + 0.1rem, 1.1rem);
+  @include mq() {
+    font-size: clamp(0.9rem, 2vw + 1.1vh + 0.1rem, 1.2rem);
+  }
+  @extend .fd-c;
+  gap: 0.2em;
+  transition: filter 50ms ease-in;
+  &:hover {
+    filter: brightness(110%);
+    @media (prefers-color-scheme: light) {
+      filter: brightness(100%);
+      outline: 0.1rem solid #bfa4ff;
+    }
+  }
+
+  &__name {
+    font-size: 0.7em;
+    font-weight: 600;
+    font-family: "Roboto Mono";
+  }
+  &__last-msg {
+    color: var(--contact-lastMsg);
+    font-size: 0.6em;
+    font-family: "Roboto";
+    font-weight: 500;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    .sender {
+      color: var(--contact-sender);
+      font-weight: 600;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+/*%%%%%%%%%%%%%%%%% Fonts %%%%%%%%%%%%%%%%%%%*/
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+/*%%%%%%%%%%%%%%%%% Mixins %%%%%%%%%%%%%%%%5*/
+@mixin mq() {
+  @media (width < 35rem) {
+    @content;
+  }
+}
+
+/*%%%%%%%%%%%%%%%%% Utility Classes %%%%%%%%%%%%%%%%5*/
+
+.gridcenter {
+  display: grid;
+  place-items: center;
+}
+
+.flexcenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexcenter-c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.fd-c {
+  display: flex;
+  flex-direction: column;
+}
+
+.f-ai {
+  display: flex;
+  align-items: center;
+}
+
+.f-jc {
+  display: flex;
+  justify-content: center;
+}
+
+.pill {
+  border-radius: 100vw;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.thin-scrollbar {
+  &::-webkit-scrollbar {
+    width: 1vw;
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: hsla(0, 0%, 100%, 0.21);
+    @extend .pill;
+  }
+  @media (prefers-color-scheme: light) {
+    &::-webkit-scrollbar-thumb {
+      background-color: hsla(265, 100%, 50%, 0.3);
+    }
+  }
+}

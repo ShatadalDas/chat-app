@@ -1,0 +1,22 @@
+@use "../../utils/module" as *;
+
+:root {
+  /*
+  * %%%%%%%%%%% Dark Theme %%%%%%%%%% *
+  */
+  --login-bc: #110127;
+
+  /*
+  * %%%%%%%%%%% Light Theme %%%%%%%%%% *
+  */
+  @media (prefers-color-scheme: light) {
+    --login-bc: linear-gradient(116.68deg, #8685ef 35.55%, #403fba 108.96%);
+  }
+}
+
+.login {
+  height: 100%;
+  width: 100%;
+  @extend .gridcenter;
+  background: var(--login-bc);
+}

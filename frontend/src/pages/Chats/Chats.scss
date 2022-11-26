@@ -1,0 +1,45 @@
+:root {
+  --chats-bc: #100127;
+
+  @media (prefers-color-scheme: light) {
+    --chats-bc: #ffffff;
+  }
+}
+
+.chats {
+  height: 100%;
+  width: 100%;
+  background-color: var(--chats-bc);
+  display: flex;
+  overflow: hidden;
+  isolation: isolate;
+  blockquote {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    // background: #06a9cf;
+    width: 70%;
+    height: 2%;
+    z-index: 0;
+    border-radius: 100vw;
+    overflow: hidden;
+    &::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      width: 100%;
+      border-radius: 100rem;
+      translate: -100% 0;
+      animation: loading 1s infinite ease-in;
+      height: 100%;
+      background: linear-gradient(-90deg, #00d0ff 0%, #1edad4 102.41%);
+    }
+  }
+}
+
+@keyframes loading {
+  100% {
+    translate: 100% 0;
+  }
+}
