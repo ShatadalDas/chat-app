@@ -38,15 +38,27 @@ const io = new Server(httpServer, {
         origin: process.env.SOCKET_URL,
     },
 });
-const users = [];
+let users = [];
 io.on("connection", (socket) => {
+    console.log("User Connected");
     socket.on("connected", (myId) => {
+        console.log("User Res");
         const me = users.find((user) => user.id === myId);
         if (me) {
             me.socketid = socket.id;
         }
         else {
             users.push({ socketid: socket.id, id: myId });
+        }
+        console.log("Users: ", users);
+    });
+    socket.on("check", (id) => {
+        const isUser = users.find((user) => user.id === id);
+        if (isUser) {
+            socket.emit("res", "Online");
+        }
+        else {
+            socket.emit("res", "Offline");
         }
     });
     socket.on("send", (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -79,7 +91,6 @@ io.on("connection", (socket) => {
                     yield receiverContact.populate("contacts");
                 }
                 const to = users.find((user) => user.id === data.receiver);
-                console.log("Users: ", users);
                 if (to) {
                     socket.broadcast.to(to.socketid).emit("new-msg", {
                         sender,
@@ -97,4 +108,7 @@ io.on("connection", (socket) => {
             socket.emit("error", error);
         }
     }));
+    socket.on("disconnect", () => {
+        users = users.filter((user) => user.socketid !== socket.id);
+    });
 });

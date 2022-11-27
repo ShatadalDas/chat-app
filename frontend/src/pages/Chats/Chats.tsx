@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-// ?import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ChatsLeft, ChatsRight } from "./components";
 import { api } from "../../utils/api";
 import "./Chats.scss";
 import Default from "./components/Default";
+import { Socket } from "socket.io-client";
 
 export interface Data {
   name: string;
@@ -12,7 +12,11 @@ export interface Data {
   _id: string;
 }
 
-function Chats() {
+interface Props {
+  socket: Socket;
+}
+
+function Chats({ socket }: Props) {
   /*
    *%%%%%%%%%%%%%%%%%% Varibales %%%%%%%%%%%%%%%%%%*/
   const [login, setLogin] = useState(sessionStorage.getItem("login"));
@@ -70,6 +74,10 @@ function Chats() {
     }
   }, [login]);
 
+  useEffect(() => {
+    socket.emit("connected", _id);
+  }, [socket]);
+
   return (
     <div className="chats">
       {auth ? (
@@ -77,7 +85,7 @@ function Chats() {
           <ChatsLeft contacts={myContacts} fetchContacts={fetchContacts} />
           <Routes>
             <Route path="/" element={<Default />} />
-            <Route path="/:name/:id" element={<ChatsRight />} />
+            <Route path="/:name/:id" element={<ChatsRight socket={socket} />} />
           </Routes>
         </>
       ) : (

@@ -11,7 +11,7 @@ import { IoSend } from "react-icons/io5";
 import Bubble from "./Bubble";
 import { useParams } from "react-router-dom";
 import { api } from "../../../utils/api";
-import { io, Socket } from "socket.io-client";
+import { Socket } from "socket.io-client";
 
 interface Message {
   sender: string;
@@ -20,10 +20,11 @@ interface Message {
   _id: string;
 }
 
-const socket = io("http://localhost:2000");
-socket.connect();
+interface Props {
+  socket: Socket;
+}
 
-function ChatsRight() {
+function ChatsRight({ socket }: Props) {
   /*
    *%%%%%%%%%%%%%%%%%%%% Variables %%%%%%%%%%%%%%%%%%%%%%%*/
   const [msg, setMsg] = useState("");
@@ -31,9 +32,15 @@ function ChatsRight() {
   const myid = sessionStorage.getItem("_id");
   const receiver = useParams();
   const [messages, setMessages] = useState<Message[]>([]);
+  const [online, setOnline] = useState("Offline");
 
   /*
    *%%%%%%%%%%%%%%%%%%%% Functions %%%%%%%%%%%%%%%%%%%%%%%*/
+
+  setInterval(() => {
+    checkStatus();
+  }, 500);
+
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (msg && myid) {
@@ -43,7 +50,7 @@ function ChatsRight() {
       const greet = h >= 12 ? "PM" : "AM";
       if (h === 12) h++;
       h %= 12;
-      const time = `${h}:${m < 10 ? "0" + m : m} ${greet}`;
+      const time = `${h < 10 ? "0" + h : h}:${m < 10 ? "0" + m : m} ${greet}`;
       const msgObj = {
         sender: myid,
         msg,
@@ -85,6 +92,13 @@ function ChatsRight() {
       });
   }
 
+  function checkStatus() {
+    socket.emit("check", receiver.id);
+    socket.on("res", (res) => {
+      setOnline(res);
+    });
+  }
+
   /*
    *%%%%%%%%%%%%%%%%%%%% useEffects %%%%%%%%%%%%%%%%%%%%%%%*/
   useEffect(() => {
@@ -93,12 +107,15 @@ function ChatsRight() {
 
   useEffect(() => {
     if (socket.connected) {
-      socket.emit("connected", myid);
       socket.on("new-msg", (data) => {
         setMessages((state) => [data, ...state]);
+        console.log("New Message");
       });
     }
-  }, [socket]);
+    return () => {
+      socket.off("new-msg");
+    };
+  }, [socket, messages]);
 
   /*
    *%%%%%%%%%%%%%%%%%%%% Return %%%%%%%%%%%%%%%%%%%%%%%*/
@@ -106,7 +123,7 @@ function ChatsRight() {
     <section className="right">
       <header className="right__header">
         <h2>{receiver.name}</h2>
-        <h3>online</h3>
+        <h3>{online}</h3>
       </header>
 
       <main className="right__main">

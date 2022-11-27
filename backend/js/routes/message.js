@@ -11,9 +11,7 @@ import { Router } from "express";
 import Messages from "../models/Messages.js";
 const router = Router();
 router.get("/:sender/:receiver", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("Hello");
     const { sender, receiver } = req.params;
-    console.log(req.params);
     try {
         const messages = yield Messages.find({
             $or: [
