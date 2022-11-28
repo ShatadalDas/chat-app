@@ -11,7 +11,7 @@
 
 /*%%%%%%%%%%%%%%%%% Mixins %%%%%%%%%%%%%%%%5*/
 @mixin mq() {
-  @media (width < 35rem) {
+  @media (max-width: 40rem) {
     @content;
   }
 }

@@ -1,3 +1,5 @@
+@use "../../utils/module" as *;
+
 :root {
   --chats-bc: #100127;
 
@@ -13,12 +15,14 @@
   display: flex;
   overflow: hidden;
   isolation: isolate;
+  @include mq() {
+    position: relative;
+  }
   blockquote {
     position: absolute;
     top: 50%;
     left: 50%;
     translate: -50% -50%;
-    // background: #06a9cf;
     width: 70%;
     height: 2%;
     z-index: 0;

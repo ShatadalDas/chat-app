@@ -28,36 +28,66 @@
   @extend .fd-c;
   width: 60%;
   height: 100%;
-  font-size: clamp(0.8rem, 1vw + 1vh + 0.1rem, 1.1rem);
+  font-size: clamp(0.7rem, 1vw + 1vh + 0.1rem, 1.1rem);
+  background: var(--chats-bc);
 
   @include mq() {
-    font-size: clamp(0.9rem, 1.5vw + 1.1vh + 0.1rem, 1.2rem);
-    display: none;
+    width: 100%;
+    font-size: clamp(0.8rem, 1.5vw + 1.1vh + 0.1rem, 1.2rem);
+    position: absolute;
+    inset: 0;
+    z-index: 1;
   }
   &__header {
     background: var(--cht-rgt-header);
     height: 10%;
     color: #fff;
-    @extend .f-jc;
-    flex-direction: column;
+    @extend .f-ai;
     padding: 0 4%;
-    gap: 0.2em;
+    gap: 0.5em;
     font-family: "Roboto";
     font-weight: 700;
     font-size: 0.8em;
     position: relative;
     z-index: 1;
     border: 1px solid var(--cht-rgt-header-border);
-    h3 {
-      opacity: 0.8;
-      text-transform: lowercase;
-      font-weight: 600;
-      font-family: "Lato";
-      font-size: 0.75em;
+    box-shadow: 0 0.2rem 1rem #0007;
+
+    @include mq() {
+      height: 8%;
+    }
+
+    &__icon {
+      font-size: 1.6em;
+      @extend .gridcenter;
+      background-color: #fff0;
+      border-radius: 50%;
+      padding: 0.2em;
+      cursor: pointer;
+      display: none;
+      @include mq() {
+        display: grid;
+      }
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    &__info {
+      font-size: 1.1em;
+
+      h3 {
+        opacity: 0.8;
+        text-transform: lowercase;
+        font-weight: 600;
+        font-family: "Lato";
+        font-size: 0.75em;
+        margin-block-start: 0.2em;
+      }
     }
   }
   &__main {
-    height: 80vh;
+    height: 80%;
     width: 100%;
     color: #fff;
     display: flex;
@@ -70,14 +100,22 @@
     & > * {
       flex-shrink: 0 !important; //very very important property
     }
+
+    @include mq() {
+      height: 85%;
+    }
   }
   &__footer {
     background: var(--cht-rgt-inp);
     height: 10%;
     @extend .gridcenter;
     border: 1px solid var(--cht-rgt-header-border);
+
+    @include mq() {
+      height: 7%;
+    }
     &__frm {
-      width: 97%;
+      width: 95%;
       display: flex;
       gap: 2%;
       font-size: 1em;
@@ -89,7 +127,7 @@
         width: 89%;
         height: 7vh;
         padding: 0.5em 1em;
-        border-radius: 0.2em;
+        border-radius: 0.4em;
         border: none;
         background: transparent;
         color: var(--cht-rgt-inp-clr);
@@ -101,6 +139,10 @@
         &::placeholder {
           font-weight: normal;
           font-size: 0.9em;
+        }
+
+        @include mq() {
+          height: 5vh;
         }
       }
       button {

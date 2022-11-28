@@ -1,15 +1,9 @@
-import {
-  FormEvent,
-  KeyboardEvent,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import "./styles/ChatsRight.scss";
 import { IoSend } from "react-icons/io5";
+import { BiArrowBack } from "react-icons/bi";
 import Bubble from "./Bubble";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../utils/api";
 import { Socket } from "socket.io-client";
 
@@ -33,13 +27,15 @@ function ChatsRight({ socket }: Props) {
   const receiver = useParams();
   const [messages, setMessages] = useState<Message[]>([]);
   const [online, setOnline] = useState("Offline");
+  const navigate = useNavigate();
+  const [virtualKeyboard, setVirtualKeyboard] = useState(false);
 
   /*
    *%%%%%%%%%%%%%%%%%%%% Functions %%%%%%%%%%%%%%%%%%%%%%%*/
 
-  setInterval(() => {
-    checkStatus();
-  }, 500);
+  // window.addEventListener("resize", () => {
+  //   setVirtualKeyboard(true);
+  // });
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -69,7 +65,7 @@ function ChatsRight({ socket }: Props) {
   }
 
   function handleEnter(e: KeyboardEvent<HTMLTextAreaElement>) {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey && !virtualKeyboard) {
       e.preventDefault();
       form.current?.requestSubmit();
     }
@@ -99,6 +95,12 @@ function ChatsRight({ socket }: Props) {
     });
   }
 
+  checkStatus();
+
+  function handleBack() {
+    navigate("/chats");
+  }
+
   /*
    *%%%%%%%%%%%%%%%%%%%% useEffects %%%%%%%%%%%%%%%%%%%%%%%*/
   useEffect(() => {
@@ -111,6 +113,11 @@ function ChatsRight({ socket }: Props) {
         setMessages((state) => [data, ...state]);
         console.log("New Message");
       });
+      socket.on("discon", (did) => {
+        if (did === receiver.id) {
+          setOnline("Offline");
+        }
+      });
     }
     return () => {
       socket.off("new-msg");
@@ -122,8 +129,14 @@ function ChatsRight({ socket }: Props) {
   return (
     <section className="right">
       <header className="right__header">
-        <h2>{receiver.name}</h2>
-        <h3>{online}</h3>
+        <div className="right__header__icon" onClick={handleBack}>
+          <BiArrowBack />
+        </div>
+
+        <div className="right__header__info">
+          <h2>{receiver.name}</h2>
+          <h3>{online}</h3>
+        </div>
       </header>
 
       <main className="right__main">

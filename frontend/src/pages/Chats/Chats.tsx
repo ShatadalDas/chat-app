@@ -79,19 +79,25 @@ function Chats({ socket }: Props) {
   }, [socket]);
 
   return (
-    <div className="chats">
-      {auth ? (
-        <>
-          <ChatsLeft contacts={myContacts} fetchContacts={fetchContacts} />
-          <Routes>
-            <Route path="/" element={<Default />} />
-            <Route path="/:name/:id" element={<ChatsRight socket={socket} />} />
-          </Routes>
-        </>
-      ) : (
-        <blockquote></blockquote>
-      )}
-    </div>
+    <>
+      <title>Bubble</title>
+      <div className="chats">
+        {auth ? (
+          <>
+            <ChatsLeft contacts={myContacts} fetchContacts={fetchContacts} />
+            <Routes>
+              <Route path="/" element={<Default />} />
+              <Route
+                path="/:name/:id"
+                element={<ChatsRight socket={socket} />}
+              />
+            </Routes>
+          </>
+        ) : (
+          <blockquote></blockquote>
+        )}
+      </div>
+    </>
   );
 }
 

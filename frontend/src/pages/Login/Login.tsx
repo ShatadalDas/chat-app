@@ -52,6 +52,7 @@ function Login() {
 
   return (
     <>
+      <title>Login - Bubble</title>
       <div className="login">
         <Form
           phn={phn}
